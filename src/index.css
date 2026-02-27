@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family:Arial, Helvetica, sans-serif;
+  width: 100dvw;
+  background-color: #ece9de;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+/* Hide default cursor globally */
+html, body, * {
+  cursor: none !important;
+}
+
+/* Ensure interactive elements also hide default cursor */
+a, button, input, textarea, select, [role="button"], [onclick] {
+  cursor: none !important;
+}
+
+@layer base {
+  @font-face {
+    font-family: 'kugile';
+    src: url('/fonts/Kugile_Demo.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'courier-italic';
+    src: url('/fonts/CourierPrime-Italic.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'courier-regular';
+    src: url('/fonts/CourierPrime-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: 'wasted-vindey';
+    src: url('/fonts/Wasted-Vindey.ttf');
+  }
+}
+
+@utility text-gradient {
+  background: linear-gradient(to bottom, #ffffff, #898989);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
