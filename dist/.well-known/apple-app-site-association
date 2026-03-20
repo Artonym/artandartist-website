@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "ENTER_TEAM_ID_HERE.com.example.anaUi",
+        "paths": [
+          "/share/profile/*"
+        ]
+      }
+    ]
+  }
+}
