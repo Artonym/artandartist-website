@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import About from './components/About'
 import Quote from './components/Quote'
 import AppShowcase from './components/AppShowcase'
+import PrivacyPolicy from './components/PrivacyPolicy'
 
 /* --------------------------
    Inner App Content Wrapper
@@ -74,6 +75,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AppContent />} />
         <Route path="/waitlist" element={<AppContent />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
       </Routes>
     </Router>
   )

@@ -8,6 +8,10 @@ const Navbar = () => {
     navigate("/waitlist");
   };
 
+  const handlePrivacyClick = () => {
+    navigate("/privacypolicy");
+  };
+
   return (
     <nav
       className="
@@ -28,12 +32,20 @@ const Navbar = () => {
         Art & Artist
       </h1>
 
-      <button
-        onClick={handleJoinClick}
-        className="bg-[#F2FF99] text-black px-8 py-3 font-courier-regular font-medium text-lg hover:bg-black hover:text-white hover:scale-105 transition-all duration-300 rounded-md"
-      >
-        Join Our Community
-      </button>
+      <div className="flex items-center gap-2">
+        <button
+          onClick={handlePrivacyClick}
+          className="text-sm font-medium text-gray-700 transition hover:text-black"
+        >
+          Privacy Policy
+        </button>
+        <button
+          onClick={handleJoinClick}
+          className="bg-[#F2FF99] text-black px-8 py-3 font-courier-regular font-medium text-lg hover:bg-black hover:text-white hover:scale-105 transition-all duration-300 rounded-md"
+        >
+          Join Our Community
+        </button>
+      </div>
 
     </nav>
   );
