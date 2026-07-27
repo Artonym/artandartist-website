@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { HashRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom"
 
 import Hero from './components/Hero'
 import Navbar from './components/Navbar'
