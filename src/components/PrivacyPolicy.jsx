@@ -26,10 +26,10 @@ const PrivacyPolicy = () => {
 
         <div className="space-y-2">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
-            Last Updated: 2026
+            Last Updated: July 28, 2026
           </p>
           <p className="leading-7 text-[15px] text-gray-700">
-            Art & Artist (“Art & Artist”, “we”, “our” or “us”) is committed to safeguarding the privacy and protection of personal data of its users. This Privacy Policy describes the manner in which we collect, use, store, disclose, and protect information obtained from users who access or use the Art & Artist website and mobile application (“Platform”).
+            Art & Artist ("Art & Artist", "we", "our", or "us") is committed to safeguarding the privacy and protection of the personal data of its users. This Privacy Policy describes how we collect, use, store, disclose, and protect information obtained from users who access or use the Art & Artist website and mobile application ("Platform").
           </p>
           <p className="leading-7 text-[15px] text-gray-700">
             By accessing or using the Platform, you acknowledge that you have read, understood, and agreed to the terms of this Privacy Policy.
@@ -46,14 +46,30 @@ const PrivacyPolicy = () => {
               <div>
                 <h3 className="font-semibold text-gray-900">a. Personal Information</h3>
                 <p className="leading-7 text-[15px] text-gray-700">
-                  Including but not limited to name, phone number, email address, profile photograph, location details, skills, portfolio, and resume.
+                  Including, but not limited to:
                 </p>
+                <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
+                  <li>Name</li>
+                  <li>Phone number</li>
+                  <li>Email address</li>
+                  <li>Profile photograph</li>
+                  <li>Location details</li>
+                  <li>Skills</li>
+                  <li>Portfolio</li>
+                  <li>Resume</li>
+                </ul>
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900">b. Account Information</h3>
                 <p className="leading-7 text-[15px] text-gray-700">
-                  Including username, encrypted password, user preferences, and subscription-related details.
+                  Including:
                 </p>
+                <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
+                  <li>Username</li>
+                  <li>Encrypted password</li>
+                  <li>User preferences</li>
+                  <li>Subscription-related details</li>
+                </ul>
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900">c. Usage Information</h3>
@@ -64,8 +80,15 @@ const PrivacyPolicy = () => {
               <div>
                 <h3 className="font-semibold text-gray-900">d. Device and Technical Information</h3>
                 <p className="leading-7 text-[15px] text-gray-700">
-                  Including device type, IP address, operating system, application version, and related technical identifiers.
+                  Including:
                 </p>
+                <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
+                  <li>Device type</li>
+                  <li>IP address</li>
+                  <li>Operating system</li>
+                  <li>Application version</li>
+                  <li>Device identifiers and related technical information</li>
+                </ul>
               </div>
             </div>
           </section>
@@ -73,39 +96,46 @@ const PrivacyPolicy = () => {
           <section>
             <h2 className="text-xl font-semibold text-gray-900">2. Use of Information</h2>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              The information collected is used for the following lawful purposes:
+              The information collected is used for the following purposes:
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>To create, maintain, and manage user accounts</li>
-              <li>To display user profiles to relevant recruiters, artists, or other users, subject to privacy settings</li>
-              <li>To facilitate job matching, collaborations, and professional opportunities</li>
-              <li>To process payments, subscriptions, and related transactions</li>
-              <li>To improve the functionality, performance, and features of the Platform</li>
-              <li>To send notifications, service-related communications, and important updates</li>
-              <li>To detect, prevent, and address fraud, misuse, or unauthorized activity</li>
+              <li>To create, maintain, and manage user accounts.</li>
+              <li>To display user profiles to recruiters, artists, and other users according to the user's privacy settings.</li>
+              <li>To facilitate job matching, collaborations, networking, and professional opportunities.</li>
+              <li>To process payments, subscriptions, and related transactions.</li>
+              <li>To improve the functionality, security, performance, and features of the Platform.</li>
+              <li>To send notifications, service-related communications, and important updates.</li>
+              <li>To detect, investigate, prevent, and address fraud, misuse, security incidents, or unauthorized activity.</li>
+              <li>To comply with applicable legal and regulatory obligations.</li>
             </ul>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900">3. Disclosure and Sharing of Information</h2>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Art & Artist does not sell, rent, or trade users’ personal data. Information may be shared only in the following circumstances:
+              Art & Artist does <strong>not</strong> sell, rent, or trade users' personal information.
+            </p>
+            <p className="mt-2 leading-7 text-[15px] text-gray-700">
+              Information may be shared only under the following circumstances:
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>With other users of the Platform, in accordance with the privacy controls selected by the user</li>
-              <li>With third-party service providers engaged for hosting, payment processing, analytics, or operational support, subject to confidentiality obligations</li>
-              <li>Where disclosure is required under applicable law, regulation, court order, or legal process</li>
-              <li>Where necessary to protect the rights, safety, security, or property of Art & Artist, its users, or the public</li>
+              <li>With other users of the Platform in accordance with the privacy settings selected by the user.</li>
+              <li>With trusted third-party service providers for hosting, payment processing, analytics, cloud storage, customer support, or operational services, subject to appropriate confidentiality obligations.</li>
+              <li>Where disclosure is required by applicable law, regulation, legal process, or governmental authority.</li>
+              <li>Where necessary to protect the rights, safety, security, or property of Art & Artist, its users, or the public.</li>
             </ul>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900">4. Data Storage and Security</h2>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We implement reasonable and industry-standard technical and organizational security measures to protect personal data from unauthorized access, loss, misuse, or alteration. User passwords are stored in encrypted form.
+              We implement reasonable administrative, technical, and organizational safeguards to protect personal information from unauthorized access, disclosure, alteration, misuse, or destruction.
             </p>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Notwithstanding the foregoing, no electronic transmission or storage system can be guaranteed to be completely secure, and Art & Artist does not warrant absolute security of user data.
+              User passwords are stored using industry-standard encryption methods.
+            </p>
+            <p className="mt-2 leading-7 text-[15px] text-gray-700">
+              Although we strive to use commercially acceptable means to protect personal data, no method of electronic transmission or storage is completely secure. Therefore, we cannot guarantee absolute security.
             </p>
           </section>
 
@@ -115,40 +145,81 @@ const PrivacyPolicy = () => {
               Users have the right to:
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Access, edit, or update their personal and profile information</li>
-              <li>Control visibility of their profile and contact permissions</li>
-              <li>Request a copy of their personal data</li>
-              <li>Delete their personal data or deactivate/delete their account at any time, subject to applicable legal requirements</li>
+              <li>Access, edit, or update their personal information.</li>
+              <li>Control the visibility of their profile and contact preferences.</li>
+              <li>Request a copy of the personal data associated with their account.</li>
+              <li>Request deletion of their account and personal data at any time through the application or our official website.</li>
             </ul>
+
+            <h3 className="mt-4 font-semibold text-gray-900">Account Deletion</h3>
+            <p className="mt-2 leading-7 text-[15px] text-gray-700">
+              Users may delete their account directly from the application by navigating to:
+            </p>
+            <p className="mt-2 font-semibold text-gray-900">
+              Profile → Settings → Delete Account
+            </p>
+            <p className="mt-2 leading-7 text-[15px] text-gray-700">
+              Upon submitting an account deletion request:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
+              <li>The account will be immediately deactivated and inaccessible.</li>
+              <li>The account will enter a 90-day pending deletion period.</li>
+              <li>During this period, users may contact our support team to cancel the deletion request and restore their account.</li>
+              <li>If no restoration request is received within the 90-day period, the account and associated personal data will be permanently deleted from our systems.</li>
+            </ul>
+            <p className="mt-3 leading-7 text-[15px] text-gray-700">
+              Certain information may be retained beyond the deletion period where required by applicable law or for legitimate business purposes, including:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
+              <li>Compliance with legal obligations</li>
+              <li>Fraud prevention</li>
+              <li>Security investigations</li>
+              <li>Tax, accounting, or financial recordkeeping</li>
+            </ul>
+            <p className="mt-3 leading-7 text-[15px] text-gray-700">
+              Any retained information will be securely stored and used only for these purposes.
+            </p>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900">6. Cookies and Tracking Technologies</h2>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Art & Artist may use cookies and similar tracking technologies to enhance user experience, analyze usage patterns, and personalize content. Users may manage cookie preferences through device or browser settings.
+              Art & Artist may use cookies and similar technologies to improve user experience, analyze Platform usage, personalize content, and enhance application performance.
+            </p>
+            <p className="mt-2 leading-7 text-[15px] text-gray-700">
+              Users may control cookie preferences through their browser or device settings where applicable.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900">7. Children’s Privacy</h2>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              The Platform is not intended for individuals below the age of thirteen (13) years. Art & Artist does not knowingly collect personal data from children. If such data is inadvertently collected, it will be deleted upon becoming aware of the same.
+              The Platform is not intended for individuals under the age of 13 years.
+            </p>
+            <p className="mt-2 leading-7 text-[15px] text-gray-700">
+              We do not knowingly collect personal information from children. If we become aware that such information has been collected, we will promptly delete it.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-gray-900">8. Amendments to the Privacy Policy</h2>
+            <h2 className="text-xl font-semibold text-gray-900">8. Amendments to this Privacy Policy</h2>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Art & Artist reserves the right to modify or update this Privacy Policy at any time. Any changes shall be notified by posting the updated policy on the Platform and/or website. Continued use of the Platform after such changes constitutes acceptance of the revised policy.
+              Art & Artist reserves the right to modify or update this Privacy Policy at any time.
+            </p>
+            <p className="mt-2 leading-7 text-[15px] text-gray-700">
+              Any changes will be posted on the Platform and/or our official website. Continued use of the Platform after such modifications constitutes acceptance of the updated Privacy Policy.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900">9. Contact Information</h2>
             <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              For any questions, concerns, or requests regarding this Privacy Policy, users may contact us at:
+              If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, including account deletion requests, please contact us at:
             </p>
             <p className="mt-3 font-semibold text-gray-900">
+              Art & Artist Support
+            </p>
+            <p className="mt-2 font-semibold text-gray-900">
               Email: tech@artonym.in
             </p>
           </section>
