@@ -7,6 +7,7 @@ import About from './components/About'
 import Quote from './components/Quote'
 import AppShowcase from './components/AppShowcase'
 import PrivacyPolicy from './components/PrivacyPolicy'
+import CustomCursor from './components/CustomCursor'
 
 /* --------------------------
    Inner App Content Wrapper
@@ -72,6 +73,7 @@ const AppContent = () => {
 const App = () => {
   return (
     <Router>
+      <CustomCursor />
       <Routes>
         <Route path="/" element={<AppContent />} />
         <Route path="/waitlist" element={<AppContent />} />

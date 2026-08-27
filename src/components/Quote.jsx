@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
@@ -157,7 +156,7 @@ const Quote = () => {
         </p>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .clip-top {
           clip-path: polygon(0 30%, 100% 0%, 100% 100%, 0 70%);
         }
@@ -202,10 +201,6 @@ const Quote = () => {
         .char {
           display: inline-block;
           position: relative;
-        }
-
-        html {
-          scroll-behavior: smooth;
         }
       `}</style>
     </section>

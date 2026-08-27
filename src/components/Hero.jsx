@@ -48,11 +48,31 @@ const getVisibleImages = () => {
     ];
   }
   
-  // Laptop L (1440px - 2559px)
-  if (width >= 1440) {
-    return images; // Use original sizes for large laptops
+  // Desktop (1920px - 2559px)
+  if (width >= 1920) {
+    return images; // Use original sizes for large desktops
   }
-  
+
+  // Laptop L (1440px - 1919px) - e.g. 1440x900 MacBooks, common laptop displays
+  if (width >= 1440) {
+    return [
+      { ...images[0], className: "top-[4%] left-[35%] w-32 h-[160px]" },
+      { ...images[1], className: "top-[13%] left-[30%] w-28 h-28" },
+      { ...images[2], className: "top-[9%] right-[22%] w-36 h-36" },
+      { ...images[3], className: "top-[55%] right-[10%] w-28 h-28" },
+      { ...images[4], className: "bottom-[48%] left-[-2%] w-28 h-26" },
+      { ...images[5], className: "bottom-[26%] left-[5%] w-32 h-26" },
+      { ...images[6], className: "bottom-[22%] right-[3%] w-28 h-28" },
+      { ...images[7], className: "bottom-[17%] right-[53%] w-40 h-32" },
+      { ...images[8], className: "top-[30%] right-[-2%] w-28 h-26" },
+      { ...images[9], className: "top-[7%] left-[5%] w-[170px] h-[130px]" },
+      { ...images[10], className: "bottom-[2%] left-[15%] w-[155px] h-[160px]" },
+      { ...images[11], className: "top-[19%] left-[51%] w-24 h-24" },
+      { ...images[12], className: "bottom-[16%] right-[25%] w-[160px] h-[130px]" },
+      { ...images[13], className: "top-[4%] right-[8%] w-[115px] h-[100px]" }
+    ];
+  }
+
   // Laptop (1024px - 1439px)
   if (width >= 1024) {
     return [
@@ -155,28 +175,26 @@ const getVisibleImages = () => {
   
   // Mobile S (320px - 374px) - Smallest screens
   return [
-    { ...images[0], className: "top-[12%] left-[4%] w-16 h-760px]" },
-    { ...images[1], className: "top-[21%] left-[18%] w-14 h-14" },
-    { ...images[2], className: "top-[12%] right-[8%] w-20 h-20" },
-    { ...images[11], className: "top-[21%] right-[21%] w-14 h-14" },
-    { ...images[4], className: "top-[40%] left-[-2%] w-12 h-[90px]" },
-    { ...images[5], className: "bottom-[0%] left-[2%] w-[40px] h-[40px]" },
-    { ...images[10], className: "bottom-[21%] left-[20%] w-14 h-14" },
-    { ...images[3], className: "bottom-[18%] right-[12%] w-12 h-[40px]" },
-    { ...images[8], className: "bottom-[32%] right-[-1%] w-10 h-[25px]" },
-    { ...images[13], className: "top-[35%] right-[8%] w-10 h-[30px]" },
-    { ...images[9], className: "bottom-[4%] left-[15%] w-12 h-[40px]" },
-    { ...images[12], className: "bottom-[2%] right-[18%] w-12 h-[50px]" },
-    { ...images[6], className: "bottom-[10%] right-[3%] w-10 h-12" },
-    { ...images[7], className: "bottom-[16%] left-[3%] w-16 h-16" }
+    { ...images[0], className: "top-[12%] left-[4%] w-14 h-[70px]" },
+    { ...images[1], className: "top-[21%] left-[18%] w-10 h-10" },
+    { ...images[2], className: "top-[12%] right-[8%] w-10 h-10" },
+    { ...images[11], className: "top-[21%] right-[21%] w-10 h-10" },
+    { ...images[4], className: "top-[40%] left-[-2%] w-8 h-[30px]" },
+    { ...images[5], className: "bottom-[0%] left-[2%] w-[30px] h-[30px]" },
+    { ...images[10], className: "bottom-[21%] left-[20%] w-10 h-10" },
+    { ...images[3], className: "bottom-[18%] right-[12%] w-8 h-[30px]" },
+    { ...images[8], className: "bottom-[32%] right-[-1%] w-6 h-[16px]" },
+    { ...images[13], className: "top-[35%] right-[8%] w-6 h-[20px]" },
+    { ...images[9], className: "bottom-[4%] left-[15%] w-8 h-[30px]" },
+    { ...images[12], className: "bottom-[2%] right-[18%] w-8 h-[38px]" },
+    { ...images[6], className: "bottom-[10%] right-[3%] w-6 h-8" },
+    { ...images[7], className: "bottom-[16%] left-[3%] w-12 h-12" }
   ];
 };
 
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzMKaoigIYjpJWGDIMsWVBopqF13zB6lknJcuCRIdjXRzSVT9uDbnjWqn_7u7VNemVVHg/exec';
 
 const Hero = ({ showWaitlistPopup, onClosePopup, onScrollToAbout }) => {
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -188,34 +206,23 @@ const Hero = ({ showWaitlistPopup, onClosePopup, onScrollToAbout }) => {
   const [submitError, setSubmitError] = useState('');
   const [visibleImages, setVisibleImages] = useState([]);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [textSize, setTextSize] = useState({ title: "40px", subtitle: "20px" });
+
+  // Fluid sizing: scales continuously with viewport width so the title never
+  // wraps or overflows at odd/in-between widths, instead of jumping between
+  // fixed px values at hard breakpoints.
+  const textSize = {
+    title: 'clamp(28px, 6.5vw, 120px)',
+    subtitle: 'clamp(14px, 3vw, 60px)'
+  };
 
   const frameRefs = useRef([]);
 
-  // Update visible images and screen size on mount and resize
+  // Update visible floating images on mount and resize
   useEffect(() => {
     const updateScreenSize = () => {
       const width = window.innerWidth;
-      const smallScreen = width < 768;
-      setIsSmallScreen(smallScreen);
+      setIsSmallScreen(width < 768);
       setVisibleImages(getVisibleImages());
-      
-      // Update text sizes based on screen width
-      if (width >= 2560) {
-        setTextSize({ title: "120px", subtitle: "60px" });
-      } else if (width >= 1440) {
-        setTextSize({ title: "100px", subtitle: "50px" });
-      } else if (width >= 1024) {
-        setTextSize({ title: "65px", subtitle: "35px" });
-      } else if (width >= 768) {
-        setTextSize({ title: "50px", subtitle: "25px" });
-      } else if (width >= 425) {
-        setTextSize({ title: "45px", subtitle: "18px" });
-      } else if (width >= 375) {
-        setTextSize({ title: "40px", subtitle: "16px" });
-      } else {
-        setTextSize({ title: "28px", subtitle: "14px" });
-      }
     };
 
     updateScreenSize();
@@ -289,30 +296,16 @@ const Hero = ({ showWaitlistPopup, onClosePopup, onScrollToAbout }) => {
   }, []);
 
   useEffect(() => {
-    // Don't set up mouse tracking for small screens
-    if (isSmallScreen) return;
-
-    const handleMouseMove = (e) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
-    };
-
-    const handleMouseLeave = () => setIsVisible(false);
-
     const handleScroll = () => {
       setShowScrollIndicator(window.scrollY <= 50);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isSmallScreen]);
+  }, []);
 
   const handleMouseMove = (e, index) => {
     // Don't handle mouse move for small screens
@@ -439,17 +432,7 @@ const Hero = ({ showWaitlistPopup, onClosePopup, onScrollToAbout }) => {
   }, [visibleImages]);
 
   return (
-    <main className="relative flex flex-col items-center justify-center h-screen bg-[#ece9de] overflow-hidden text-center px-4 cursor-none">
-      
-      {/* Red Dot Cursor - Hidden on small devices */}
-      {!isSmallScreen && (
-        <div 
-          className={`fixed w-3 h-3 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[9999] transition-opacity duration-200 ${
-            isVisible ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{ left: cursorPosition.x, top: cursorPosition.y }}
-        />
-      )}
+    <main className="relative flex h-screen min-h-[500px] flex-col items-center justify-center overflow-hidden bg-[#ece9de] px-4 pb-20 text-center cursor-none lg:pb-28">
 
       {/* Floating Images - Only show filtered images */}
       {visibleImages.map((img, idx) => (
@@ -609,7 +592,7 @@ const Hero = ({ showWaitlistPopup, onClosePopup, onScrollToAbout }) => {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         .text-gradient {
           background: linear-gradient(45deg, #000000, #016367);
           -webkit-background-clip: text;

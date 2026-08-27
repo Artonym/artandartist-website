@@ -1,7 +1,5 @@
-/* eslint-disable no-irregular-whitespace */
 import React, { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap';
-import { useNavigate } from "react-router-dom";
 
 
 // Updated images array with responsive positioning
@@ -185,19 +183,19 @@ const About = ({ onJoinWaitlistClick }) => {
             Why We Built Art & Artist
           </h3>
           <div className="space-y-4 text-black text-justify">
-            <p className="text-lg lg:text-xl font-Georgia leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif leading-relaxed opacity-90">
               Art has always been more than just expression - it's a language that connects souls. But somewhere along the way, We noticed that many talented artists struggled to find their space in the world - not because they lacked skill or passion, but because they lacked connection.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               We met painters who couldn't find galleries, filmmakers who couldn't find crews, actors who didn't know where to start, and countless creators who felt unseen. That's when We realized - talent needs a home, not just a platform.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               So We built Art & Artist - a place where creativity meets opportunity. A community where artists can be discovered, collaborate, and grow together.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               This platform is our way of giving back to the art world - to create a digital ecosystem where every artist, from any corner of India or the world, can share their story, find their tribe, and turn their passion into purpose.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               Because art deserves more than applause - it deserves connection, recognition, and love.
             </p>
           </div>
@@ -209,19 +207,19 @@ const About = ({ onJoinWaitlistClick }) => {
             The Problem
           </h3>
           <div className="space-y-4 text-black text-justify">
-            <p className="text-lg lg:text-xl font-Georgia leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif leading-relaxed opacity-90">
               Every artist carries a story, a dream, and a spark that deserves to be seen.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               But too often, that spark fades in silence.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               Many artists - painters, filmmakers, actors, designers, and musicians - struggle to find the right people, the right projects, or even the right space to express their art.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               We saw this everywhere: talented individuals with incredible potential, but no platform that truly understood them.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               Not just a lack of visibility - a lack of connection.
             </p>
           </div>
@@ -233,19 +231,19 @@ const About = ({ onJoinWaitlistClick }) => {
             The Vision
           </h3>
           <div className="space-y-4 text-black text-justify">
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               That's when We decided to build Art & Artist - a home for creativity.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               A place where art isn't lost in the noise, but celebrated.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               A place where every creator, no matter where they come from, can connect, collaborate, and grow.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               Art & Artist is more than just a platform - it's a movement to bring together the creative community under one roof.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               It's where portfolios become stories, projects become collaborations, and connections become lifelong partnerships.
             </p>
           </div>
@@ -257,22 +255,22 @@ const About = ({ onJoinWaitlistClick }) => {
             The Journey
           </h3>
           <div className="space-y-4 text-black text-justify">
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               Art & Artist was born from a simple belief:
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90 italic">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90 italic">
               that art deserves more than applause - it deserves recognition, opportunity, and love.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               Through this platform, We wanted to give artists the space to showcase their work, find like-minded people, and build meaningful careers.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               What started as an idea has now grown into a vision - to make the art world more open, inclusive, and connected.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               Because when artists come together, something magical happens.
             </p>
-            <p className="text-lg lg:text-xl font-Georgia  leading-relaxed opacity-90">
+            <p className="text-lg lg:text-xl font-serif  leading-relaxed opacity-90">
               And that magic is what Art & Artist is all about.
             </p>
           </div>
