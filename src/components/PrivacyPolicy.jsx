@@ -1,6 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const paragraphClass = 'mt-2 leading-7 text-[15px] text-gray-700';
+const listClass = 'mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700';
+
+const PolicyList = ({ items }) => (
+  <ul className={listClass}>{items.map((item) => <li key={item}>{item.replaceAll('&apos;', "'")}</li>)}</ul>
+);
+
+const PolicySection = ({ title, children }) => (
+  <section><h2 className="text-xl font-semibold text-gray-900">{title}</h2>{children}</section>
+);
+
+const Subsection = ({ title, children }) => (
+  <div className="mt-4"><h3 className="font-semibold text-gray-900">{title}</h3>{children}</div>
+);
+
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
 
@@ -9,324 +24,52 @@ const PrivacyPolicy = () => {
       <div className="mx-auto flex max-w-5xl flex-col gap-6 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-200 pb-4">
           <div>
-            <p className="font-courier-regular text-sm uppercase tracking-[0.3em] text-gray-500">
-              Privacy Policy
-            </p>
-            <h1 className="mt-2 font-wasted-vindey text-3xl sm:text-4xl text-gray-900">
-              Art & Artist
-            </h1>
+            <p className="font-courier-regular text-sm uppercase tracking-[0.3em] text-gray-500">Privacy Policy</p>
+            <h1 className="mt-2 font-wasted-vindey text-3xl text-gray-900 sm:text-4xl">Art &amp; Artist</h1>
+            <p className="mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Operated by Artonym Pvt. Ltd.</p>
           </div>
-          <button
-            onClick={() => navigate('/')}
-            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-black hover:text-white"
-          >
-            Back to Home
-          </button>
+          <button onClick={() => navigate('/')} className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-black hover:text-white">Back to Home</button>
         </div>
 
-        <div className="space-y-2">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
-            Last Updated: August 1, 2026
-          </p>
-          <p className="leading-7 text-[15px] text-gray-700">
-            Art & Artist (&quot;Art & Artist&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting the privacy, security, and personal information of every user. This Privacy Policy explains how we collect, use, store, disclose, and safeguard information when you access or use the Art & Artist website, mobile application, and related services (collectively, the &quot;Platform&quot;).
-          </p>
-          <p className="leading-7 text-[15px] text-gray-700">
-            By accessing or using the Platform, you acknowledge that you have read, understood, and agreed to this Privacy Policy.
-          </p>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Last Updated: August 25, 2026</p>
+          <p className={paragraphClass}>Art &amp; Artist (&quot;Art &amp; Artist&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), operated by Artonym Pvt. Ltd., is committed to protecting the privacy, security, and personal information of every user and maintaining a safe environment for everyone using our Platform.</p>
+          <p className={paragraphClass}>This Privacy Policy explains how we collect, use, store, disclose, protect, and otherwise process information when you access or use the Art &amp; Artist website, mobile application, and related services (collectively, the &quot;Platform&quot;).</p>
+          <p className={paragraphClass}>By accessing or using the Platform, you acknowledge that you have read, understood, and agreed to this Privacy Policy.</p>
         </div>
 
         <div className="space-y-5">
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">1. Information We Collect</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We may collect and process the following categories of information.
-            </p>
-            <div className="mt-3 space-y-3">
-              <div>
-                <h3 className="font-semibold text-gray-900">a. Personal Information</h3>
-                <p className="leading-7 text-[15px] text-gray-700">
-                  This may include:
-                </p>
-                <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-                  <li>Full name</li>
-                  <li>Phone number</li>
-                  <li>Email address</li>
-                  <li>Profile photograph</li>
-                  <li>Location information</li>
-                  <li>Skills</li>
-                  <li>Portfolio</li>
-                  <li>Resume</li>
-                  <li>Professional details provided by the user</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">b. Account Information</h3>
-                <p className="leading-7 text-[15px] text-gray-700">
-                  Including:
-                </p>
-                <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-                  <li>Username</li>
-                  <li>Encrypted password</li>
-                  <li>User preferences</li>
-                  <li>Subscription information</li>
-                  <li>Account settings</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">c. Usage Information</h3>
-                <p className="leading-7 text-[15px] text-gray-700">
-                  We automatically collect information regarding how you use the Platform, including:
-                </p>
-                <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-                  <li>Activity logs</li>
-                  <li>Profile views</li>
-                  <li>Messages</li>
-                  <li>Job applications</li>
-                  <li>User interactions</li>
-                  <li>Search history within the Platform</li>
-                  <li>Feature usage</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">d. Device &amp; Technical Information</h3>
-                <p className="leading-7 text-[15px] text-gray-700">
-                  Including:
-                </p>
-                <ul className="mt-2 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-                  <li>Device type</li>
-                  <li>IP address</li>
-                  <li>Operating system</li>
-                  <li>Browser type</li>
-                  <li>App version</li>
-                  <li>Device identifiers</li>
-                  <li>Diagnostic information</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">2. How We Use Your Information</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We use the information we collect for purposes including:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Creating and managing user accounts.</li>
-              <li>Displaying user profiles according to privacy settings.</li>
-              <li>Connecting artists, recruiters, organizations, and creative professionals.</li>
-              <li>Facilitating job opportunities, collaborations, networking, and communication.</li>
-              <li>Processing subscriptions and payments.</li>
-              <li>Providing customer support.</li>
-              <li>Improving Platform functionality and user experience.</li>
-              <li>Personalizing content and recommendations.</li>
-              <li>Sending service notifications and important updates.</li>
-              <li>Detecting fraud, abuse, unauthorized activity, or security incidents.</li>
-              <li>Enforcing our Terms of Service.</li>
-              <li>Complying with legal and regulatory obligations.</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">3. Sharing and Disclosure of Information</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Art & Artist does <strong>not</strong> sell, rent, or trade users&apos; personal information.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Information may be shared only in the following situations:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>With other users according to your profile visibility and privacy settings.</li>
-              <li>With trusted third-party service providers for cloud hosting, payment processing, analytics, customer support, security, and operational services.</li>
-              <li>When required by law, court order, or governmental authority.</li>
-              <li>To protect the rights, safety, security, property, or legal interests of Art & Artist, its users, or the public.</li>
-            </ul>
-            <p className="mt-3 leading-7 text-[15px] text-gray-700">
-              All third-party providers are required to maintain appropriate confidentiality and security measures.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">4. Data Storage and Security</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We implement reasonable administrative, technical, and organizational safeguards to protect your information from unauthorized access, disclosure, alteration, misuse, or destruction.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Security measures include:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Encrypted password storage</li>
-              <li>Secure server infrastructure</li>
-              <li>Access controls</li>
-              <li>Industry-standard security practices</li>
-            </ul>
-            <p className="mt-3 leading-7 text-[15px] text-gray-700">
-              While we strive to protect personal information, no internet transmission or electronic storage system is completely secure. Therefore, we cannot guarantee absolute security.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">5. User Rights and Privacy Controls</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Users may:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Access their personal information.</li>
-              <li>Update or edit account details.</li>
-              <li>Control profile visibility.</li>
-              <li>Manage communication preferences.</li>
-              <li>Request a copy of their personal information.</li>
-              <li>Request deletion of their account and associated personal data.</li>
-            </ul>
-
-            <h3 className="mt-4 font-semibold text-gray-900">Account Deletion</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Users may delete their account by navigating to:
-            </p>
-            <p className="mt-2 font-semibold text-gray-900">
-              Profile → Settings → Delete Account
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              When an account deletion request is submitted:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>The account is immediately deactivated.</li>
-              <li>The account enters a 90-day pending deletion period.</li>
-              <li>During this period, users may contact our support team to restore their account.</li>
-              <li>If no restoration request is received within 90 days, the account and associated personal information are permanently deleted.</li>
-            </ul>
-            <p className="mt-3 leading-7 text-[15px] text-gray-700">
-              Certain information may be retained where required by applicable law or legitimate business purposes, including:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Legal compliance</li>
-              <li>Fraud prevention</li>
-              <li>Security investigations</li>
-              <li>Tax and accounting obligations</li>
-            </ul>
-            <p className="mt-3 leading-7 text-[15px] text-gray-700">
-              Retained information is securely stored and used only for those purposes.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">6. Cookies and Similar Technologies</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Art & Artist may use cookies and similar technologies to:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Improve user experience</li>
-              <li>Analyze Platform usage</li>
-              <li>Remember user preferences</li>
-              <li>Personalize content</li>
-              <li>Enhance application performance</li>
-            </ul>
-            <p className="mt-3 leading-7 text-[15px] text-gray-700">
-              Users may manage cookie preferences through their browser or device settings where applicable.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">7. Child Privacy Policy</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Art & Artist is committed to protecting the privacy and safety of children.
-            </p>
-
-            <h3 className="mt-4 font-semibold text-gray-900">Age Requirement</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Art & Artist is designed for artists, creative professionals, recruiters, and individuals seeking networking and career opportunities.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Our Services are <strong>not intended for children under the age of 13</strong>, or the minimum digital age required by applicable law in the user&apos;s country.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We do <strong>not knowingly collect, use, or store personal information from children under 13 years of age.</strong>
-            </p>
-
-            <h3 className="mt-4 font-semibold text-gray-900">If a Child Creates an Account</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              If we become aware that a child under the age of 13 has created an account or provided personal information without verified parental consent, we will take appropriate action, including:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Suspending or removing the account.</li>
-              <li>Deleting the child&apos;s personal information from our systems within a reasonable period, unless we are legally required to retain certain information.</li>
-              <li>Taking reasonable steps to prevent further collection of the child&apos;s information.</li>
-            </ul>
-
-            <h3 className="mt-4 font-semibold text-gray-900">Parental Rights</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              If you are a parent or legal guardian and believe your child has provided personal information through Art & Artist, you may contact us to:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Request deletion of your child&apos;s account.</li>
-              <li>Request deletion of your child&apos;s personal information.</li>
-              <li>Request information regarding what data has been collected, if any.</li>
-              <li>Raise concerns regarding your child&apos;s privacy.</li>
-            </ul>
-            <p className="mt-3 leading-7 text-[15px] text-gray-700">
-              We will review and respond to verified parental requests in accordance with applicable law.
-            </p>
-
-            <h3 className="mt-4 font-semibold text-gray-900">Content Uploaded by Children</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              If content uploaded by a child below the permitted minimum age is identified, we reserve the right to:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6 leading-7 text-[15px] text-gray-700">
-              <li>Remove the content.</li>
-              <li>Suspend or terminate the associated account.</li>
-              <li>Delete associated personal information where appropriate.</li>
-            </ul>
-            <p className="mt-3 leading-7 text-[15px] text-gray-700">
-              These actions may be taken without prior notice where necessary to protect children&apos;s privacy or comply with legal obligations.
-            </p>
-
-            <h3 className="mt-4 font-semibold text-gray-900">Reporting Underage Users</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Users who believe an account belongs to a child below the minimum permitted age may report the account through the Help &amp; Support section within the Platform.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We review such reports and take appropriate action where necessary.
-            </p>
-
-            <h3 className="mt-4 font-semibold text-gray-900">International Users</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Where local laws require a higher minimum age or verified parental consent, Art & Artist will comply with the applicable legal requirements of the relevant jurisdiction.
-            </p>
-
-            <h3 className="mt-4 font-semibold text-gray-900">Updates to Child Privacy Policy</h3>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We may update this Child Privacy Policy from time to time.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Material changes will be communicated through the App and/or our official website. Continued use of the Platform following such updates constitutes acceptance of the revised policy.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">8. Changes to this Privacy Policy</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              We may update or modify this Privacy Policy at any time.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Any revisions will be posted on our Platform and/or official website. The &quot;Last Updated&quot; date at the top of this Privacy Policy will indicate when changes were made.
-            </p>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              Your continued use of the Platform after updates become effective constitutes your acceptance of the revised Privacy Policy.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900">9. Contact Us</h2>
-            <p className="mt-2 leading-7 text-[15px] text-gray-700">
-              If you have any questions, concerns, requests, or complaints regarding this Privacy Policy, the Child Privacy Policy, your personal information, or account deletion, please contact us.
-            </p>
-            <p className="mt-3 font-semibold text-gray-900">
-              Art & Artist Support
-            </p>
-            <p className="mt-2 font-semibold text-gray-900">
-              Email: tech@artonym.in
-            </p>
-          </section>
+          <PolicySection title="1. Information We Collect">
+            <p className={paragraphClass}>We may collect and process the following categories of information.</p>
+            <Subsection title="a. Personal Information"><p className={paragraphClass}>This may include:</p><PolicyList items={['Full name', 'Phone number', 'Email address', 'Profile photograph', 'Location information', 'Skills', 'Portfolio', 'Resume', 'Professional details provided by the user', 'Other information voluntarily provided by the user']} /></Subsection>
+            <Subsection title="b. Account Information"><p className={paragraphClass}>Including:</p><PolicyList items={['Username', 'Encrypted password', 'User preferences', 'Subscription information', 'Account settings', 'Age or date-of-birth information where required for safety, eligibility, or legal compliance']} /></Subsection>
+            <Subsection title="c. Usage Information"><p className={paragraphClass}>We automatically collect or process information regarding how you use the Platform, including:</p><PolicyList items={['Activity logs', 'Profile views', 'Messages', 'Job applications', 'User interactions', 'Search history within the Platform', 'Feature usage', 'Reports and complaints submitted through the Platform', 'Safety-related interactions and enforcement actions']} /></Subsection>
+            <Subsection title="d. Device &amp; Technical Information"><p className={paragraphClass}>Including:</p><PolicyList items={['Device type', 'IP address', 'Operating system', 'Browser type', 'App version', 'Device identifiers', 'Diagnostic information', 'Log and security information']} /></Subsection>
+          </PolicySection>
+          <PolicySection title="2. How We Use Your Information"><p className={paragraphClass}>We use the information we collect for purposes including:</p><PolicyList items={['Creating and managing user accounts.', 'Displaying user profiles according to privacy settings.', 'Connecting artists, recruiters, organizations, and creative professionals.', 'Facilitating job opportunities, collaborations, networking, and communication.', 'Processing subscriptions and payments.', 'Providing customer support.', 'Improving Platform functionality and user experience.', 'Personalizing content and recommendations.', 'Sending service notifications and important updates.', 'Detecting fraud, abuse, unauthorized activity, or security incidents.', 'Detecting, preventing, and responding to child-safety violations and other prohibited conduct.', 'Reviewing reports concerning CSAE, CSAM, grooming, exploitation, or other safety concerns.', 'Enforcing our Terms of Service, Community Guidelines, and safety policies.', 'Preserving information where legally permitted or required.', 'Cooperating with law enforcement and competent authorities where legally required or permitted.', 'Complying with legal and regulatory obligations.']} /></PolicySection>
+          <PolicySection title="3. Sharing and Disclosure of Information"><p className={paragraphClass}>Art &amp; Artist does <strong>not</strong> sell, rent, or trade users&apos; personal information.</p><p className={paragraphClass}>Information may be shared only in the following situations:</p><PolicyList items={['With other users according to your profile visibility and privacy settings.', 'With trusted third-party service providers for cloud hosting, payment processing, analytics, customer support, security, and operational services.', 'When required by law, court order, or governmental authority.', 'To protect the rights, safety, security, property, or legal interests of Art &amp; Artist, its users, or the public.', 'Where necessary to investigate or respond to suspected unlawful activity, child sexual abuse or exploitation, CSAM, grooming, trafficking, or other serious safety concerns.']} /><p className={paragraphClass}>All third-party providers are expected to maintain appropriate confidentiality and security measures.</p></PolicySection>
+          <PolicySection title="4. Data Storage and Security"><p className={paragraphClass}>We implement reasonable administrative, technical, and organizational safeguards to protect your information from unauthorized access, disclosure, alteration, misuse, or destruction.</p><p className={paragraphClass}>Security measures may include:</p><PolicyList items={['Encrypted password storage', 'Secure server infrastructure', 'Access controls', 'Industry-standard security practices', 'Security monitoring and abuse-prevention measures']} /><p className={paragraphClass}>While we strive to protect personal information, no internet transmission or electronic storage system is completely secure. Therefore, we cannot guarantee absolute security.</p></PolicySection>
+          <PolicySection title="5. User Rights and Privacy Controls"><p className={paragraphClass}>Users may:</p><PolicyList items={['Access their personal information.', 'Update or edit account details.', 'Control profile visibility.', 'Manage communication preferences.', 'Request a copy of their personal information.', 'Request deletion of their account and associated personal data.']} /><Subsection title="Account Deletion"><p className={paragraphClass}>Users may delete their account by navigating to:</p><p className="mt-2 font-semibold text-gray-900">Profile -&gt; Settings -&gt; Delete Account</p><p className={paragraphClass}>When an account deletion request is submitted:</p><PolicyList items={['The account is immediately deactivated.', 'The account enters a 90-day pending deletion period.', 'During this period, users may contact our support team to restore their account.', 'If no restoration request is received within 90 days, the account and associated personal information are permanently deleted.']} /><p className={paragraphClass}>Certain information may be retained where required by applicable law or legitimate business purposes, including:</p><PolicyList items={['Legal compliance', 'Fraud prevention', 'Security investigations', 'Child-safety investigations', 'Enforcement of our policies', 'Tax and accounting obligations', 'Cooperation with lawful requests from authorities']} /><p className={paragraphClass}>Retained information is securely stored and used only for those purposes.</p></Subsection></PolicySection>
+          <PolicySection title="6. Cookies and Similar Technologies"><p className={paragraphClass}>Art &amp; Artist may use cookies and similar technologies to:</p><PolicyList items={['Improve user experience', 'Analyze Platform usage', 'Remember user preferences', 'Personalize content', 'Enhance application performance', 'Maintain security and prevent abuse']} /><p className={paragraphClass}>Users may manage cookie preferences through their browser or device settings where applicable.</p></PolicySection>
+          <PolicySection title="7. Child Privacy and Age Requirements"><p className={paragraphClass}>Art &amp; Artist is designed for artists, creative professionals, recruiters, organizations, and individuals seeking networking and career opportunities.</p><p className={paragraphClass}>Our Services are not intended for children under the age of 13, or the minimum digital age required by applicable law in the user&apos;s country.</p><p className={paragraphClass}>We do not knowingly collect, use, or store personal information from children under 13 years of age without the legally required parental consent.</p><p className={paragraphClass}>Where local law requires a higher minimum age or additional parental consent requirements, Art &amp; Artist will comply with the applicable legal requirements.</p><Subsection title="If a Child Creates an Account"><p className={paragraphClass}>If we become aware that a child below the applicable minimum age has created an account or provided personal information without legally required parental consent, we may take appropriate action, including:</p><PolicyList items={['Suspending or removing the account.', 'Deleting the child&apos;s personal information from our systems within a reasonable period, unless we are legally required to retain certain information.', 'Taking reasonable steps to prevent further collection of the child&apos;s information.']} /></Subsection><Subsection title="Parental Rights"><p className={paragraphClass}>If you are a parent or legal guardian and believe your child has provided personal information through Art &amp; Artist, you may contact us to:</p><PolicyList items={['Request deletion of your child&apos;s account.', 'Request deletion of your child&apos;s personal information.', 'Request information regarding what data has been collected, where legally permitted.', 'Raise concerns regarding your child&apos;s privacy or safety.']} /><p className={paragraphClass}>We will review and respond to verified parental requests in accordance with applicable law.</p></Subsection></PolicySection>
+          <PolicySection title="8. CHILD SAFETY STANDARDS &amp; CSAE POLICY"><Subsection title="8.1 Our Commitment to Child Safety"><p className={paragraphClass}>Art &amp; Artist, operated by Artonym Pvt. Ltd., is committed to protecting children and maintaining a safe environment for everyone using our Platform.</p><p className={paragraphClass}>Art &amp; Artist has zero tolerance for Child Sexual Abuse and Exploitation (CSAE), Child Sexual Abuse Material (CSAM), child grooming, sexual exploitation of children, or any other form of sexual abuse or exploitation involving minors.</p><p className={paragraphClass}>Any content, account, communication, behavior, or activity that facilitates, promotes, depicts, encourages, or attempts to facilitate the sexual abuse or exploitation of children is strictly prohibited on Art &amp; Artist.</p></Subsection><Subsection title="9. Prohibited Child Sexual Abuse and Exploitation"><p className={paragraphClass}>Art &amp; Artist strictly prohibits:</p><PolicyList items={['Child Sexual Abuse and Exploitation (CSAE)', 'Child Sexual Abuse Material (CSAM)', 'Sexual exploitation of minors', 'Sexualization of children', 'Grooming or attempting to groom a child', 'Soliciting sexual images or content from a child', 'Requesting or encouraging sexual activity involving a child', 'Sexual communication with children', 'Offering money, employment, gifts, services, opportunities, or other benefits in exchange for sexual content involving a child', 'Trafficking or exploitation of children', 'Facilitating contact between children and individuals for the purpose of sexual exploitation', 'Uploading, sharing, requesting, distributing, or promoting CSAM', 'Directing users to external locations containing CSAM or content facilitating CSAE', 'Creating, manipulating, or distributing sexualized images or representations of minors', 'Using Art & Artist to facilitate any form of child sexual exploitation', 'Attempting to circumvent or evade these rules']} /></Subsection><Subsection title="10. Zero-Tolerance Policy"><p className={paragraphClass}>Art &amp; Artist maintains a zero-tolerance approach to CSAE and CSAM.</p><p className={paragraphClass}>We may take immediate action against accounts or content suspected of violating this policy, including:</p><PolicyList items={['Removing prohibited content', 'Restricting or terminating accounts', 'Preventing users from creating additional accounts', 'Restricting messaging or communication capabilities', 'Preserving relevant information where legally permitted or required', 'Reporting suspected illegal activity to appropriate authorities', 'Cooperating with law enforcement and relevant authorities', 'Taking other measures necessary to protect children and users of the Platform']} /><p className={paragraphClass}>We do not permit users to use Art &amp; Artist to facilitate or promote child sexual abuse or exploitation.</p></Subsection></PolicySection>
+          <PolicySection title="11. Reporting Child Safety Concerns"><p className={paragraphClass}>Users can report suspected CSAE, CSAM, grooming, exploitation, or other child-safety concerns through the reporting functionality available within Art &amp; Artist.</p><p className={paragraphClass}><strong>Child Safety / CSAE Reporting Email:</strong> tech@artonym.in</p><p className={paragraphClass}>When submitting a report, users should provide as much relevant information as reasonably possible, including:</p><PolicyList items={['Username or profile involved', 'Relevant content or communication', 'Description of the suspected violation', 'Date and approximate time of the incident', 'Relevant links or identifying information']} /><p className={paragraphClass}>Do not email, download, copy, or otherwise redistribute suspected CSAM unnecessarily. Provide identifying information or links where appropriate and safe to do so.</p></PolicySection>
+          <PolicySection title="12. Our Response to Child Safety Reports"><p className={paragraphClass}>Art &amp; Artist will review reports concerning child safety and CSAE as a priority.</p><p className={paragraphClass}>Depending on the circumstances, we may:</p><ol className="mt-3 list-decimal space-y-2 pl-6 leading-7 text-[15px] text-gray-700"><li>Review the reported account, content, or activity.</li><li>Remove or restrict violating content.</li><li>Suspend or terminate accounts.</li><li>Restrict communication or other Platform functionality.</li><li>Preserve relevant information where permitted or required by law.</li><li>Escalate serious matters to appropriate authorities.</li><li>Cooperate with lawful requests from law enforcement or other competent authorities.</li></ol><p className={paragraphClass}>We may take action even when a report does not result in a formal finding of illegal activity if we determine that the activity presents a significant safety risk.</p></PolicySection>
+          <PolicySection title="13. Cooperation With Law Enforcement"><p className={paragraphClass}>Art &amp; Artist will cooperate with law enforcement and other competent authorities regarding suspected child sexual abuse, exploitation, CSAM, grooming, trafficking, or other unlawful activity involving children, to the extent required or permitted by applicable law.</p><p className={paragraphClass}>Where legally required, we may report suspected CSAE or CSAM to appropriate authorities or relevant organizations.</p><p className={paragraphClass}>We may preserve relevant account, content, communication, technical, or other information where legally permitted or required for investigations, legal proceedings, or safety purposes.</p></PolicySection>
+          <PolicySection title="14. Prohibition on Child Grooming"><p className={paragraphClass}>Art &amp; Artist strictly prohibits grooming behavior.</p><p className={paragraphClass}>Grooming includes attempts to establish, manipulate, or maintain a relationship with a child for the purpose of sexual exploitation or abuse. This may include:</p><PolicyList items={['Building trust with a child for sexual purposes', 'Requesting private or sexual photographs', 'Moving conversations to external platforms for sexual purposes', 'Offering gifts, money, employment, opportunities, or other benefits to facilitate sexual exploitation', 'Threatening or blackmailing a child to obtain sexual content', 'Encouraging secrecy about inappropriate interactions', 'Arranging meetings with a child for sexual purposes']} /><p className={paragraphClass}>Such conduct may result in immediate account termination and reporting to appropriate authorities where required or appropriate.</p></PolicySection>
+          <PolicySection title="15. Child Sexual Abuse Material"><p className={paragraphClass}>Art &amp; Artist strictly prohibits the creation, upload, possession, request, sharing, distribution, promotion, or facilitation of Child Sexual Abuse Material (CSAM).</p><p className={paragraphClass}>Users must never upload or share such material on Art &amp; Artist.</p><p className={paragraphClass}>We may remove content and take appropriate enforcement action when we identify or receive reports concerning suspected CSAM.</p></PolicySection>
+          <PolicySection title="16. Artificially Generated or Manipulated Content"><p className={paragraphClass}>Art &amp; Artist also prohibits the use of artificial intelligence, image-generation systems, image manipulation, editing, or other technologies to create, modify, sexualize, or depict children in sexually exploitative or abusive contexts.</p><p className={paragraphClass}>The use of technology does not make otherwise prohibited child sexual abuse or exploitation content acceptable.</p><p className={paragraphClass}>Any attempt to use generated, edited, manipulated, synthetic, or altered content to facilitate CSAE or CSAM is strictly prohibited.</p></PolicySection>
+          <PolicySection title="17. Child Safety and Creative Content"><p className={paragraphClass}>Art &amp; Artist is a platform for artists, actors, filmmakers, photographers, designers, performers, and other creative professionals.</p><p className={paragraphClass}>Creative, educational, documentary, journalistic, or artistic context does not permit sexual exploitation of children.</p><p className={paragraphClass}>Any content involving minors must comply with applicable laws, our Terms of Service, Community Guidelines, and child-safety requirements.</p><p className={paragraphClass}>Where content presents a child-safety risk, Art &amp; Artist may restrict or remove the content regardless of the user&apos;s stated artistic, educational, documentary, or creative purpose.</p></PolicySection>
+          <PolicySection title="18. Account Enforcement"><p className={paragraphClass}>Users who violate this policy may face:</p><PolicyList items={['Content removal', 'Warning where appropriate', 'Temporary suspension', 'Permanent account termination', 'Restrictions on creating new accounts', 'Restrictions on communication features', 'Reporting to appropriate authorities where required or appropriate']} /><p className={paragraphClass}>Serious CSAE or CSAM violations may result in immediate permanent termination without prior warning.</p><p className={paragraphClass}>Art &amp; Artist may also take preventive action when necessary to protect children, users, or the integrity of the Platform.</p></PolicySection>
+          <PolicySection title="19. Protecting Personal Information of Children"><p className={paragraphClass}>Art &amp; Artist takes additional precautions regarding information involving children.</p><p className={paragraphClass}>Users must not publicly share a child&apos;s:</p><PolicyList items={['Home address', 'Precise location', 'Personal telephone number', 'Personal email address', 'School location', 'Sensitive personal information', 'Private photographs or videos without appropriate authorization']} /><p className={paragraphClass}>Users should obtain appropriate permission before uploading identifiable photographs, videos, or other personal information involving children.</p><p className={paragraphClass}>The presence of a child in legitimate creative, educational, documentary, or artistic content does not remove the responsibility to protect the child&apos;s privacy and safety.</p></PolicySection>
+          <PolicySection title="20. Age and Platform Safety"><p className={paragraphClass}>Art &amp; Artist may apply age-related restrictions and safety measures to protect minors.</p><p className={paragraphClass}>Certain features, including professional networking, messaging, employment opportunities, or other interactions, may be restricted based on age and applicable legal requirements.</p><p className={paragraphClass}>Users must provide accurate information where age verification is required.</p><p className={paragraphClass}>Attempting to bypass age-related safety controls or providing false information for the purpose of accessing restricted features is prohibited.</p></PolicySection>
+          <PolicySection title="21. Reporting Underage Users"><p className={paragraphClass}>Users who believe an account belongs to a child below the minimum permitted age may report the account through the Help &amp; Support or reporting functionality within the Platform.</p><p className={paragraphClass}>We review such reports and may take appropriate action where necessary, including account restriction, suspension, removal, or deletion of personal information where appropriate and legally permitted.</p></PolicySection>
+          <PolicySection title="22. International Users"><p className={paragraphClass}>Art &amp; Artist may be accessed by users from different countries and jurisdictions.</p><p className={paragraphClass}>Where local laws require a higher minimum age, additional parental consent, age verification, reporting obligations, or other child-safety protections, Art &amp; Artist will take reasonable steps to comply with applicable legal requirements.</p></PolicySection>
+          <PolicySection title="23. Child Safety Contact"><p className={paragraphClass}>For child-safety concerns, including suspected CSAE, CSAM, grooming, exploitation, trafficking, or inappropriate interactions involving minors, contact:</p><p className={paragraphClass}><strong>Art &amp; Artist / Artonym Pvt. Ltd.</strong><br />Child Safety / CSAE Email: tech@artonym.in<br />General Support Email: tech@artonym.in<br />Website: www.artandartist.co.in</p><p className={paragraphClass}><strong>Company:</strong> Artonym Pvt. Ltd.</p><p className={paragraphClass}>We encourage users, parents, guardians, and other concerned individuals to report child-safety concerns promptly.</p></PolicySection>
+          <PolicySection title="24. Updates to the Child Safety Policy"><p className={paragraphClass}>Art &amp; Artist may update this Child Safety Standards &amp; CSAE Policy periodically to reflect changes to:</p><PolicyList items={['The Platform', 'Applicable laws', 'Safety practices', 'Regulatory requirements', 'Industry standards']} /><p className={paragraphClass}>The latest version will be published on this webpage.</p><p className={paragraphClass}>Material changes may also be communicated through the Platform and/or our official website.</p></PolicySection>
+          <PolicySection title="25. Changes to this Privacy Policy"><p className={paragraphClass}>We may update or modify this Privacy Policy at any time.</p><p className={paragraphClass}>Any revisions will be posted on our Platform and/or official website. The &quot;Last Updated&quot; date at the top of this Privacy Policy will indicate when changes were made.</p><p className={paragraphClass}>Where appropriate, material changes may be communicated through the Platform or other reasonable means.</p><p className={paragraphClass}>Your continued use of the Platform after updates become effective constitutes your acceptance of the revised policy, to the extent permitted by applicable law.</p></PolicySection>
+          <PolicySection title="26. Contact Us"><p className={paragraphClass}>If you have any questions, concerns, requests, or complaints regarding this Privacy Policy, the Child Privacy Policy, Child Safety Standards &amp; CSAE Policy, your personal information, or account deletion, please contact us.</p><p className="mt-3 font-semibold text-gray-900">Art &amp; Artist Support</p><p className="mt-2 font-semibold text-gray-900">Email: tech@artonym.in</p><p className={paragraphClass}>For child-safety or CSAE-related concerns, please use the dedicated child-safety contact listed in Section 23.</p></PolicySection>
+          <section className="border-t border-gray-200 pt-5"><h2 className="text-xl font-semibold text-gray-900">Declaration</h2><p className={paragraphClass}>Art &amp; Artist, operated by Artonym Pvt. Ltd., expressly prohibits Child Sexual Abuse and Exploitation (CSAE), Child Sexual Abuse Material (CSAM), child grooming, and all forms of sexual exploitation or abuse involving children.</p><p className={paragraphClass}>We are committed to maintaining a safe Platform, taking appropriate enforcement action against violations, providing mechanisms for users to report child-safety concerns, protecting children&apos;s personal information, and cooperating with relevant authorities where required or permitted by applicable law.</p><p className="mt-4 text-sm text-gray-500">&copy; 2026 Artonym Pvt. Ltd. All Rights Reserved.</p></section>
         </div>
       </div>
     </section>
