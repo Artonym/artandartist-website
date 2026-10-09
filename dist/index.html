@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Art &amp; Artist — Where imagination becomes opportunity</title>
+    <meta
+      name="description"
+      content="Art & Artist is a home for India's creative community — painters, filmmakers, actors, musicians and designers finding each other, collaborating and growing. Coming soon."
+    />
+    <meta name="theme-color" content="#ECE9DE" />
+    <meta property="og:title" content="Art & Artist — Art meets Opportunity" />
+    <meta
+      property="og:description"
+      content="A home for creativity. Discover, collaborate and grow with artists from every corner of India and the world."
+    />
+    <meta property="og:type" content="website" />
+    <style>
+      html { background: #ece9de; }
+      #root:empty::before { content: "Loading…"; display: block; padding: 32px; font: 13px ui-monospace, monospace; color: #6d675a; }
+    </style>
+    <noscript><style>#root:empty::before { content: "Please enable JavaScript to view Art & Artist."; }</style></noscript>
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:image" content="/icon-512.png" />
+    <script type="module" crossorigin src="/assets/index-3_v32RgW.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DY6Y13F_.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // If the app hasn't rendered after a few seconds, say why instead of showing a blank page.
+      (function () {
+        var errs = [];
+        function note(m) { errs.push(String(m)); }
+        window.addEventListener("error", function (e) {
+          note(e.message || (e.target && (e.target.src || e.target.href) ? "Failed to load: " + (e.target.src || e.target.href) : "Unknown error"));
+        }, true);
+        window.addEventListener("unhandledrejection", function (e) { note(e.reason && (e.reason.stack || e.reason.message) || e.reason); });
+        setTimeout(function () {
+          var root = document.getElementById("root");
+          if (root && root.childNodes.length === 0) {
+            root.innerHTML = '<div style="padding:32px;font:14px/1.5 system-ui,sans-serif;max-width:720px"><h1 style="font-size:22px;margin:0 0 10px">Art &amp; Artist could not start</h1><p>Try a hard refresh (Ctrl + Shift + R). Details:</p><pre style="white-space:pre-wrap;background:#f4f1e8;padding:14px;border-radius:8px">' +
+              (errs.length ? errs.join("\n\n").replace(/</g, "&lt;") : "No error was reported. Check that you opened the address printed by `npm run dev` and that the terminal is still running.") + "</pre></div>";
+          }
+        }, 4000);
+      })();
+    </script>
+  </body>
+</html>
