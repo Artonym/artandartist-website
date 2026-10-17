@@ -2,6 +2,7 @@ import {
   AnimatePresence,
   motion,
   useAnimationFrame,
+  useMotionTemplate,
   useMotionValue,
   useMotionValueEvent,
   useScroll,
@@ -10,9 +11,9 @@ import {
   useVelocity,
   type MotionValue,
 } from "motion/react";
-import { useRef, useState, type FormEvent, type ReactNode } from "react";
-import { Art, type Variant } from "./art";
-import { Brand, EASE, Magnetic, Reveal, SplitText, Star, scrollToId } from "./ui";
+import { Fragment, useRef, useState, type FormEvent } from "react";
+import { PHOTOS, type PhotoKey } from "./photos";
+import { Brand, EASE, Magnetic, Photo, Reveal, SplitText, scrollToId } from "./ui";
 
 /* =========================================================
    NAV — floating pill, hides on scroll down, returns on up
@@ -25,6 +26,10 @@ export function Nav() {
     setHidden(y > prev && y > 200);
   });
   const bar = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  const go = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    scrollToId(id);
+  };
   return (
     <>
       <motion.div className="progress" style={{ scaleX: bar }} />
@@ -34,16 +39,17 @@ export function Nav() {
         animate={{ y: hidden ? -110 : 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: EASE }}
       >
-        <a href="#top" className="nav__brand" data-cursor="Top" onClick={(e) => { e.preventDefault(); scrollToId("top"); }}>
+        <a href="#top" className="nav__brand" data-cursor="Top" onClick={go("top")}>
           <Brand />
         </a>
         <nav className="nav__links" aria-label="Primary">
-          <a href="#story" onClick={(e) => { e.preventDefault(); scrollToId("story"); }}>Story</a>
-          <a href="#tribe" onClick={(e) => { e.preventDefault(); scrollToId("tribe"); }}>Who it&rsquo;s for</a>
-          <a href="#atelier" onClick={(e) => { e.preventDefault(); scrollToId("atelier"); }}>Atelier</a>
+          <a href="#story" onClick={go("story")}>Story</a>
+          <a href="#tribe" onClick={go("tribe")}>Who it&rsquo;s for</a>
+          <a href="#atelier" onClick={go("atelier")}>Atelier</a>
           <a href="/privacypolicy">Privacy Policy</a>
+          <a href="/terms">Terms</a>
         </nav>
-        <a href="#join" className="btn btn--lime btn--sm" onClick={(e) => { e.preventDefault(); scrollToId("join"); }}>
+        <a href="#join" className="btn btn--lime btn--sm" onClick={go("join")}>
           Join Our Community
         </a>
       </motion.header>
@@ -52,11 +58,13 @@ export function Nav() {
 }
 
 /* =========================================================
-   MARQUEE — speeds up with scroll velocity
+   PHOTO STRIPS — two rows that never stop moving, and speed
+   up (and even reverse) with your scrolling
    ========================================================= */
-const WORDS = ["Painters", "Filmmakers", "Actors", "Musicians", "Designers", "Dancers", "Storytellers", "Makers"];
+const ROW_A: PhotoKey[] = ["kathak", "painterFloor", "filmSet", "sitar", "potter", "gallery", "stage", "designer"];
+const ROW_B: PhotoKey[] = ["pichwai", "camera", "painterOutdoor", "dancers", "studio", "miniature", "lettering", "mural"];
 
-function Row({ dir, outline }: { dir: 1 | -1; outline?: boolean }) {
+function StripRow({ keys, dir, tall }: { keys: PhotoKey[]; dir: 1 | -1; tall: boolean }) {
   const x = useMotionValue(0);
   const { scrollY } = useScroll();
   const vel = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
@@ -66,17 +74,19 @@ function Row({ dir, outline }: { dir: 1 | -1; outline?: boolean }) {
   useAnimationFrame((_, delta) => {
     const b = boost.get();
     if (b !== 0) dirRef.current = (b > 0 ? 1 : -1) * dir;
-    x.set(x.get() + dirRef.current * (0.9 + Math.abs(b)) * (delta / 1000) * 1.8);
+    x.set(x.get() + dirRef.current * (0.9 + Math.abs(b)) * (delta / 1000) * 1.7);
   });
-  const items = [...WORDS, ...WORDS, ...WORDS, ...WORDS];
+  const items = [...keys, ...keys, ...keys, ...keys];
   return (
-    <div className="marquee__row">
-      <motion.div className={`marquee__track ${outline ? "is-outline" : ""}`} style={{ x: wrapped }}>
-        {items.map((w, i) => (
-          <span key={i} className="marquee__item">
-            {w}
-            <Star className="marquee__star" />
-          </span>
+    <div className="strip__row">
+      <motion.div className="strip__track" style={{ x: wrapped }}>
+        {items.map((k, i) => (
+          <figure key={i} className={`scard${tall ? " scard--tall" : ""}`} data-cursor="">
+            <div className="scard__img">
+              <Photo k={k} w={420} />
+            </div>
+            <figcaption>{PHOTOS[k].label}</figcaption>
+          </figure>
         ))}
       </motion.div>
     </div>
@@ -85,33 +95,54 @@ function Row({ dir, outline }: { dir: 1 | -1; outline?: boolean }) {
 
 export function Marquee() {
   return (
-    <section className="marquee" aria-label="Disciplines we celebrate">
-      <Row dir={-1} />
-      <Row dir={1} outline />
+    <section className="strip" aria-label="A glimpse of the community">
+      <StripRow keys={ROW_A} dir={-1} tall />
+      <StripRow keys={ROW_B} dir={1} tall={false} />
     </section>
   );
 }
 
 /* =========================================================
-   MANIFESTO — words light up as you scroll
+   MANIFESTO — words (and little photos) light up as you scroll
    ========================================================= */
-function Word({ children, p, range }: { children: string; p: MotionValue<number>; range: [number, number] }) {
-  const o = useTransform(p, range, [0.14, 1]);
-  const y = useTransform(p, range, [8, 0]);
+type Item = { t: "w"; x: string } | { t: "c"; k: PhotoKey };
+
+const MANIFESTO: (string | PhotoKey)[] = [
+  "Art has always been more than expression —",
+  "@paintClose",
+  "it is a language that connects souls.",
+  "@sitarClose",
+  "But talent needs a home, not just a platform.",
+  "@potter",
+  "We are building a place where artists are discovered, collaborate, and grow together.",
+  "@dancersJump",
+  "Because art deserves more than applause — it deserves connection, recognition, and love.",
+];
+
+const ITEMS: Item[] = MANIFESTO.flatMap((s): Item[] =>
+  s.startsWith("@") ? [{ t: "c", k: s.slice(1) as PhotoKey }] : s.split(" ").map((x) => ({ t: "w", x })),
+);
+
+function Piece({ it, p, range }: { it: Item; p: MotionValue<number>; range: [number, number] }) {
+  const o = useTransform(p, range, [0.13, 1]);
+  const y = useTransform(p, range, [10, 0]);
+  const sc = useTransform(p, range, [0.6, 1]);
+  if (it.t === "c")
+    return (
+      <motion.span style={{ opacity: o, scale: sc }} className="chip" aria-hidden>
+        <Photo k={it.k} w={320} />
+      </motion.span>
+    );
   return (
     <motion.span style={{ opacity: o, y }} className="word">
-      {children}
+      {it.x}
     </motion.span>
   );
 }
 
-const MANIFESTO =
-  "Art has always been more than expression — it is a language that connects souls. But talent needs a home, not just a platform. We are building a place where artists are discovered, collaborate, and grow together. Because art deserves more than applause — it deserves connection, recognition, and love.";
-
 export function Manifesto() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "end 0.55"] });
-  const words = MANIFESTO.split(" ");
   return (
     <section className="manifesto" id="manifesto" ref={ref}>
       <div className="wrap">
@@ -119,10 +150,8 @@ export function Manifesto() {
           <p className="eyebrow">About us — Why we built Art &amp; Artist</p>
         </Reveal>
         <p className="manifesto__text">
-          {words.map((w, i) => (
-            <Word key={i} p={scrollYProgress} range={[i / words.length, Math.min(1, (i + 4) / words.length)]}>
-              {w}
-            </Word>
+          {ITEMS.map((it, i) => (
+            <Piece key={i} it={it} p={scrollYProgress} range={[i / ITEMS.length, Math.min(1, (i + 4) / ITEMS.length)]} />
           ))}
         </p>
       </div>
@@ -131,100 +160,14 @@ export function Manifesto() {
 }
 
 /* =========================================================
-   STORY — pinned horizontal scroll: Problem / Vision / Journey
-   ========================================================= */
-const STORY: { n: string; tag: string; title: string; body: ReactNode; v: Variant; pal: number }[] = [
-  {
-    n: "01",
-    tag: "The Problem",
-    title: "A spark that fades in silence.",
-    body: (
-      <>
-        <p>Every artist carries a story, a dream, and a spark that deserves to be seen. But too often, that spark fades in silence.</p>
-        <p>Painters who couldn&rsquo;t find galleries. Filmmakers who couldn&rsquo;t find crews. Actors who didn&rsquo;t know where to start. Not just a lack of visibility — a lack of <em>connection.</em></p>
-      </>
-    ),
-    v: "figure",
-    pal: 3,
-  },
-  {
-    n: "02",
-    tag: "The Vision",
-    title: "A home for creativity.",
-    body: (
-      <>
-        <p>A place where art isn&rsquo;t lost in the noise, but celebrated. Where every creator, from any corner of India or the world, can connect, collaborate, and grow.</p>
-        <p>Where portfolios become stories, projects become collaborations, and connections become lifelong partnerships.</p>
-      </>
-    ),
-    v: "arches",
-    pal: 0,
-  },
-  {
-    n: "03",
-    tag: "The Journey",
-    title: "Born from one simple belief.",
-    body: (
-      <>
-        <p>Art deserves more than applause — it deserves recognition, opportunity, and love.</p>
-        <p>What started as an idea is now a vision: to make the art world more open, inclusive, and connected. Because when artists come together, something magical happens.</p>
-      </>
-    ),
-    v: "sun",
-    pal: 2,
-  },
-];
-
-export function Story() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${(STORY.length - 1) * (100 / STORY.length)}%`]);
-  const bar = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  return (
-    <section className="story" id="story" ref={ref} style={{ height: `${STORY.length * 100 + 40}vh` }}>
-      <div className="story__sticky">
-        <motion.div className="story__track" style={{ x, width: `${STORY.length * 100}vw` }}>
-          {STORY.map((s, i) => (
-            <article className="panel" key={s.n}>
-              <div className="panel__text">
-                <p className="panel__tag">
-                  <span>{s.n}</span> {s.tag}
-                </p>
-                <h2 className="panel__title">{s.title}</h2>
-                <div className="panel__body">{s.body}</div>
-              </div>
-              <PanelArt v={s.v} pal={s.pal} p={scrollYProgress} i={i} />
-            </article>
-          ))}
-        </motion.div>
-        <div className="story__rail" aria-hidden>
-          <motion.span style={{ scaleX: bar }} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PanelArt({ v, pal, p, i }: { v: Variant; pal: number; p: MotionValue<number>; i: number }) {
-  const mid = i / (STORY.length - 1 || 1);
-  const rot = useTransform(p, [mid - 0.5, mid, mid + 0.5], [-10, 0, 10], { clamp: false });
-  const sc = useTransform(p, [mid - 0.35, mid, mid + 0.35], [0.82, 1, 0.82]);
-  return (
-    <motion.div className="panel__art" style={{ rotate: rot, scale: sc }} data-cursor="">
-      <Art variant={v} seed={i + 40} palette={pal} className="panel__svg" label={`Illustration for ${v}`} />
-    </motion.div>
-  );
-}
-
-/* =========================================================
    TRIBE — expanding disciplines
    ========================================================= */
-const TRIBE: { name: string; line: string; v: Variant; pal: number }[] = [
-  { name: "Painters", line: "Find the galleries and patrons that were looking for you.", v: "blobs", pal: 0 },
-  { name: "Filmmakers", line: "Find your crew — the cinematographers, editors and composers.", v: "film", pal: 1 },
-  { name: "Actors", line: "Know where to start, and get seen by the people casting.", v: "figure", pal: 3 },
-  { name: "Musicians", line: "Meet collaborators, stages and the ears that need your sound.", v: "waves", pal: 2 },
-  { name: "Designers", line: "Turn a portfolio into projects, partners and a practice.", v: "mandala", pal: 4 },
+const TRIBE: { name: string; line: string; k: PhotoKey }[] = [
+  { name: "Painters", line: "Find the galleries and patrons that were looking for you.", k: "painterFloor" },
+  { name: "Filmmakers", line: "Find your crew — the cinematographers, editors and composers.", k: "filmSet" },
+  { name: "Actors", line: "Know where to start, and get seen by the people casting.", k: "stage" },
+  { name: "Musicians", line: "Meet collaborators, stages and the ears that need your sound.", k: "sitar" },
+  { name: "Designers", line: "Turn a portfolio into projects, partners and a practice.", k: "designer" },
 ];
 
 export function Tribe() {
@@ -253,7 +196,7 @@ export function Tribe() {
               viewport={{ once: true, margin: "0px 0px -8% 0px" }}
               data-cursor=""
             >
-              <Art variant={t.v} seed={i + 70} palette={t.pal} className="tcard__art" />
+              <Photo k={t.k} w={900} className="tcard__art" />
               <span className="tcard__shade" />
               <span className="tcard__index">0{i + 1}</span>
               <span className="tcard__name">{t.name}</span>
@@ -281,11 +224,11 @@ export function Tribe() {
 /* =========================================================
    PROCESS — stacking cards
    ========================================================= */
-const STEPS = [
-  { n: "01", t: "Showcase", d: "Give your work a home. Portfolios become stories people actually stop and read.", bg: "var(--turmeric)", fg: "var(--ink)" },
-  { n: "02", t: "Connect", d: "Find like-minded people — the crew, the collaborator, the patron — wherever they are.", bg: "var(--indigo)", fg: "var(--paper)" },
-  { n: "03", t: "Collaborate", d: "Projects become collaborations. Ideas find hands, and hands find stages.", bg: "var(--vermilion)", fg: "var(--paper)" },
-  { n: "04", t: "Grow", d: "Connections become lifelong partnerships and meaningful careers.", bg: "var(--ink)", fg: "var(--lime)" },
+const STEPS: { n: string; t: string; d: string; bg: string; fg: string; k: PhotoKey }[] = [
+  { n: "01", t: "Showcase", d: "Give your work a home. Portfolios become stories people actually stop and read.", bg: "var(--sand)", fg: "var(--charcoal)", k: "gallery" },
+  { n: "02", t: "Connect", d: "Find like-minded people — the crew, the collaborator, the patron — wherever they are.", bg: "var(--ivory)", fg: "var(--charcoal)", k: "dancers" },
+  { n: "03", t: "Collaborate", d: "Projects become collaborations. Ideas find hands, and hands find stages.", bg: "var(--terracotta)", fg: "var(--ivory)", k: "crew" },
+  { n: "04", t: "Grow", d: "Connections become lifelong partnerships and meaningful careers.", bg: "var(--charcoal)", fg: "var(--ivory)", k: "painterSmile" },
 ];
 
 function StepCard({ s, i, p }: { s: (typeof STEPS)[number]; i: number; p: MotionValue<number> }) {
@@ -296,7 +239,9 @@ function StepCard({ s, i, p }: { s: (typeof STEPS)[number]; i: number; p: Motion
       <span className="step__n">{s.n}</span>
       <h3 className="step__t">{s.t}</h3>
       <p className="step__d">{s.d}</p>
-      <Art variant={(["sun", "mandala", "stripes", "waves"] as Variant[])[i]} seed={i + 90} palette={i} className="step__art" />
+      <div className="step__img">
+        <Photo k={s.k} w={700} />
+      </div>
     </motion.div>
   );
 }
@@ -324,16 +269,16 @@ export function Process() {
 /* =========================================================
    ATELIER — draggable preview of the curated stream
    ========================================================= */
-const FEED: { tag: string; title: string; meta: string; v: Variant; pal: number }[] = [
-  { tag: "Open call", title: "Group exhibition seeks new voices", meta: "Painters · Sculptors", v: "blobs", pal: 1 },
-  { tag: "Casting", title: "Short film looking for its lead", meta: "Actors · Filmmakers", v: "film", pal: 0 },
-  { tag: "Collab", title: "Folk-meets-electronic EP needs a vocalist", meta: "Musicians", v: "waves", pal: 2 },
-  { tag: "Feature", title: "Studio visit: a muralist at work", meta: "Fine art", v: "arches", pal: 4 },
-  { tag: "Crew call", title: "Documentary needs a cinematographer", meta: "Filmmakers", v: "stripes", pal: 3 },
-  { tag: "Brief", title: "Identity for an independent gallery", meta: "Designers", v: "mandala", pal: 5 },
+const FEED: { tag: string; title: string; meta: string; k: PhotoKey }[] = [
+  { tag: "Open call", title: "Group exhibition seeks new voices", meta: "Painters · Sculptors", k: "gallery" },
+  { tag: "Casting", title: "Short film looking for its lead", meta: "Actors · Filmmakers", k: "stage" },
+  { tag: "Collab", title: "Folk-meets-electronic EP needs a vocalist", meta: "Musicians", k: "studio" },
+  { tag: "Feature", title: "Studio visit: a muralist at work", meta: "Fine art", k: "mural" },
+  { tag: "Crew call", title: "Documentary needs a cinematographer", meta: "Filmmakers", k: "camera" },
+  { tag: "Brief", title: "Identity for an independent gallery", meta: "Designers", k: "lettering" },
 ];
 
-function FeedCard({ f, i }: { f: (typeof FEED)[number]; i: number }) {
+function FeedCard({ f }: { f: (typeof FEED)[number] }) {
   const ref = useRef<HTMLDivElement>(null);
   const rx = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
   const ry = useSpring(useMotionValue(0), { stiffness: 200, damping: 20 });
@@ -344,8 +289,8 @@ function FeedCard({ f, i }: { f: (typeof FEED)[number]; i: number }) {
       style={{ rotateX: rx, rotateY: ry, transformPerspective: 900 }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
-        ry.set(((e.clientX - r.left) / r.width - 0.5) * 14);
-        rx.set(-((e.clientY - r.top) / r.height - 0.5) * 14);
+        ry.set(((e.clientX - r.left) / r.width - 0.5) * 12);
+        rx.set(-((e.clientY - r.top) / r.height - 0.5) * 12);
       }}
       onMouseLeave={() => {
         rx.set(0);
@@ -354,7 +299,7 @@ function FeedCard({ f, i }: { f: (typeof FEED)[number]; i: number }) {
       data-cursor="Drag"
     >
       <div className="fcard__img">
-        <Art variant={f.v} seed={i + 120} palette={f.pal} className="fcard__art" />
+        <Photo k={f.k} w={640} className="fcard__photo" />
         <span className="fcard__tag">{f.tag}</span>
       </div>
       <h3 className="fcard__title">{f.title}</h3>
@@ -374,11 +319,11 @@ export function Atelier() {
     <section className="atelier" id="atelier">
       <div className="wrap">
         <Reveal>
-          <p className="eyebrow eyebrow--light">The Digital Atelier</p>
+          <p className="eyebrow">The Digital Atelier</p>
         </Reveal>
-        <SplitText as="h2" className="h2 h2--light" text="A curated stream, made only for artists." />
+        <SplitText as="h2" className="h2" text="A curated stream, made only for artists." />
         <Reveal delay={0.1}>
-          <p className="lede lede--light">
+          <p className="lede">
             Explore fine art, creative updates and opportunities tailored exclusively for artists and art professionals.
           </p>
         </Reveal>
@@ -393,8 +338,8 @@ export function Atelier() {
           onViewportEnter={measure}
           whileTap={{ cursor: "grabbing" }}
         >
-          {FEED.map((f, i) => (
-            <FeedCard f={f} i={i} key={f.title} />
+          {FEED.map((f) => (
+            <FeedCard f={f} key={f.title} />
           ))}
         </motion.div>
       </div>
@@ -408,9 +353,125 @@ export function Atelier() {
    ========================================================= */
 const ENDPOINT = import.meta.env.VITE_WAITLIST_ENDPOINT as string | undefined;
 
+/* a gallery wall that never stops moving, behind the pass */
+const WALL: { keys: PhotoKey[]; secs: number; up: boolean; drop: number }[] = [
+  { keys: ["kathak", "camera", "potter", "gallery", "lettering", "sitar"], secs: 70, up: true, drop: 0 },
+  { keys: ["pichwai", "painterSmile", "stage", "dancers", "brushes", "mural"], secs: 55, up: false, drop: -90 },
+  { keys: ["miniature2", "filmSet", "painterOutdoor", "designer", "kathakali", "curtain"], secs: 80, up: true, drop: -30 },
+  { keys: ["sitarClose", "crew", "easel", "dancersJump", "paintClose", "clapper"], secs: 62, up: false, drop: -130 },
+  { keys: ["studio", "greenhouse", "miniature", "potter", "painterFloor", "stage"], secs: 74, up: true, drop: -60 },
+  { keys: ["dancers", "lettering", "kathak", "mural", "camera", "pichwai"], secs: 58, up: false, drop: -110 },
+  { keys: ["sitar", "painterFloor", "gallery", "brushes", "kathakali", "easel"], secs: 66, up: true, drop: -20 },
+];
+
+/** the membership pass: tilts toward your cursor, catches the light, gets stamped when you join */
+function Pass({ state, onSubmit, burst }: { state: "idle" | "sending" | "done" | "error"; onSubmit: (e: FormEvent<HTMLFormElement>) => void; burst: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const rx = useSpring(useMotionValue(0), { stiffness: 140, damping: 16, mass: 0.6 });
+  const ry = useSpring(useMotionValue(0), { stiffness: 140, damping: 16, mass: 0.6 });
+  const sx = useMotionValue(30);
+  const sy = useMotionValue(20);
+  const sheen = useMotionTemplate`radial-gradient(480px circle at ${sx}% ${sy}%, rgba(246,241,233,0.9), rgba(183,154,107,0.38) 38%, rgba(183,154,107,0) 65%)`;
+  return (
+    <motion.div
+      ref={ref}
+      className="pass"
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1100 }}
+      initial={{ opacity: 0, y: 70, rotate: -2 }}
+      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+      viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+      transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
+      onPointerMove={(e) => {
+        const r = ref.current!.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        ry.set((px - 0.5) * 12);
+        rx.set(-(py - 0.5) * 12);
+        sx.set(px * 100);
+        sy.set(py * 100);
+      }}
+      onPointerLeave={() => {
+        rx.set(0);
+        ry.set(0);
+        sx.set(30);
+        sy.set(20);
+      }}
+    >
+      <div className="pass__body">
+        <div className="pass__main">
+          <header className="pass__head">
+            <span className="pass__brand">
+              <Brand />
+            </span>
+            <span className="pass__tag">Founding member</span>
+          </header>
+
+          <h3 className="pass__title">{state === "done" ? "You\u2019re on the list." : "Your seat at the table."}</h3>
+          <p className="pass__text">
+            {state === "done"
+              ? "Welcome to the tribe. We\u2019ll email you the moment the doors open."
+              : "Be first through the door when we open. Share your email and we\u2019ll let you know."}
+          </p>
+
+          <AnimatePresence mode="wait">
+            {state === "done" ? (
+              <motion.div key="ok" className="pass__ok" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: EASE, duration: 0.6 }}>
+                <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden>
+                  <motion.path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.7, delay: 0.25 }} />
+                </svg>
+                <span>Confirmed</span>
+                <Burst key={burst} />
+              </motion.div>
+            ) : (
+              <motion.form key="form" className="pass__form" onSubmit={onSubmit} exit={{ opacity: 0, y: -10 }}>
+                <label className="sr-only" htmlFor="email">Email address</label>
+                <input id="email" name="email" type="email" required placeholder="you@yourstudio.com" autoComplete="email" disabled={state === "sending"} />
+                <Magnetic strength={0.2}>
+                  <button className="btn btn--ink" type="submit" disabled={state === "sending"} data-cursor="Send">
+                    {state === "sending" ? "Sending…" : "Join the waitlist"} <span aria-hidden>→</span>
+                  </button>
+                </Magnetic>
+              </motion.form>
+            )}
+          </AnimatePresence>
+          {state === "error" && <p className="form__err" role="alert">Something went wrong — please try again.</p>}
+        </div>
+
+        <aside className="pass__stub" aria-hidden>
+          <div className="pass__photo">
+            <Photo k="kathak" w={360} />
+          </div>
+          <span className="pass__admit">Admit one artist</span>
+          <span className="pass__year">Est. {new Date().getFullYear()}</span>
+        </aside>
+
+        <motion.div className="pass__sheen" style={{ backgroundImage: sheen }} aria-hidden />
+
+        {state === "done" && (
+          <motion.div
+            className="stamp"
+            initial={{ scale: 2.6, rotate: -26, opacity: 0 }}
+            animate={{ scale: 1, rotate: -9, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 240, damping: 15, delay: 0.15 }}
+            aria-hidden
+          >
+            Welcome
+          </motion.div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 export function Join() {
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [burst, setBurst] = useState(0);
+  const ref = useRef<HTMLElement>(null);
+
+  // the wall drifts gently as you scroll through
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const wallY = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email = new FormData(e.currentTarget).get("email");
@@ -430,56 +491,60 @@ export function Join() {
       setState("error");
     }
   };
+
   return (
-    <section className="join" id="join">
-      <div className="join__stars" aria-hidden>
-        {[...Array(6)].map((_, i) => (
-          <motion.span key={i} animate={{ rotate: 360 }} transition={{ duration: 18 + i * 4, repeat: Infinity, ease: "linear" }} style={{ left: `${8 + i * 17}%`, top: `${(i % 3) * 28 + 8}%` }}>
-            <Star />
-          </motion.span>
+    <section
+      className="join"
+      id="join"
+      ref={ref}
+      onPointerMove={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+      }}
+    >
+      <motion.div className="join__wall" style={{ y: wallY }} aria-hidden>
+        {WALL.map((c, i) => (
+          <div key={i} className="wcol" style={{ marginTop: c.drop }}>
+            <div className="wcol__track" style={{ animationDuration: `${c.secs}s`, animationDirection: c.up ? "normal" : "reverse" }}>
+              {[...c.keys, ...c.keys].map((k, j) => (
+                <div key={j} className="wcol__img">
+                  <Photo k={k} w={360} />
+                </div>
+              ))}
+            </div>
+          </div>
         ))}
-      </div>
+      </motion.div>
+      <div className="join__veil" aria-hidden />
+      <div className="join__glow" aria-hidden />
+
       <div className="wrap join__inner">
         <Reveal>
           <p className="eyebrow">Art meets opportunity</p>
         </Reveal>
-        <SplitText as="h2" className="join__title" text="Join our community." />
-        <Reveal delay={0.15}>
-          <p className="lede">Be first through the door when we open. Share your email and we&rsquo;ll let you know.</p>
-        </Reveal>
-        <Reveal delay={0.25}>
-          <form className="form" onSubmit={submit} noValidate={false}>
-            <AnimatePresence mode="wait">
-              {state === "done" ? (
-                <motion.div key="ok" className="form__ok" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ ease: EASE, duration: 0.6 }}>
-                  <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden>
-                    <motion.path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.7, delay: 0.2 }} />
-                  </svg>
-                  You&rsquo;re on the list. Welcome to the tribe.
-                  <Burst key={burst} />
-                </motion.div>
-              ) : (
-                <motion.div key="form" className="form__row" exit={{ opacity: 0, y: -10 }}>
-                  <label className="sr-only" htmlFor="email">Email address</label>
-                  <input id="email" name="email" type="email" required placeholder="you@yourstudio.com" autoComplete="email" disabled={state === "sending"} />
-                  <Magnetic strength={0.25}>
-                    <button className="btn btn--ink" type="submit" disabled={state === "sending"} data-cursor="Send">
-                      {state === "sending" ? "Sending…" : "Join the waitlist"}
-                    </button>
-                  </Magnetic>
-                </motion.div>
-              )}
-            </AnimatePresence>
-            {state === "error" && <p className="form__err" role="alert">Something went wrong — please try again.</p>}
-          </form>
-        </Reveal>
+        <h2 className="join__title" aria-label="Join our community.">
+          <SplitText text="Join our" />
+          <br />
+          <span className="hl2">
+            <motion.i
+              className="hl2__bar"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.1, ease: EASE, delay: 0.7 }}
+            />
+            <SplitText text="community." delay={0.15} />
+          </span>
+        </h2>
+        <Pass state={state} onSubmit={submit} burst={burst} />
       </div>
     </section>
   );
 }
 
 function Burst() {
-  const colors = ["#E2492B", "#22256B", "#F2B52A", "#16130E", "#1E6B52"];
+  const colors = ["#A65D3F", "#B79A6B", "#292522", "#DCD2C4"];
   return (
     <span className="burst" aria-hidden>
       {Array.from({ length: 26 }, (_, i) => {
@@ -510,21 +575,23 @@ export function Footer() {
         <p>Art deserves more than applause.</p>
         <div className="footer__links">
           <a href="/privacypolicy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
           <a href="#top" onClick={(e) => { e.preventDefault(); scrollToId("top"); }}>Back to top ↑</a>
         </div>
       </div>
       <div className="footer__word" aria-label="Art & Artist">
         {letters.map((c, i) => (
-          <motion.span
-            key={i}
-            initial={{ y: "100%" }}
-            whileInView={{ y: "0%" }}
-            viewport={{ once: true, margin: "0px 0px -5% 0px" }}
-            transition={{ duration: 1.1, ease: EASE, delay: i * 0.05 }}
-            whileHover={{ y: "-6%", transition: { duration: 0.25 } }}
-          >
-            {c === " " ? " " : c}
-          </motion.span>
+          <Fragment key={i}>
+            <motion.span
+              initial={{ y: "100%" }}
+              whileInView={{ y: "0%" }}
+              viewport={{ once: true, margin: "0px 0px -5% 0px" }}
+              transition={{ duration: 1.1, ease: EASE, delay: i * 0.05 }}
+              whileHover={{ y: "-6%", transition: { duration: 0.25 } }}
+            >
+              {c === " " ? " " : c === "&" ? <span className="amp">&amp;</span> : c}
+            </motion.span>
+          </Fragment>
         ))}
       </div>
       <p className="footer__legal">© {new Date().getFullYear()} Art &amp; Artist. All rights reserved.</p>
