@@ -1,7 +1,9 @@
 import { useCallback, useState } from "react";
 import { Hero } from "./Hero";
-import { Atelier, Footer, Join, Manifesto, Marquee, Nav, Process, Story, Tribe } from "./Sections";
-import { Cursor, Preloader, useSmoothScroll } from "./ui";
+import { Atelier, Footer, Join, Manifesto, Marquee, Nav, Process, Tribe } from "./Sections";
+import { Story } from "./Story";
+import { Preloader } from "./Preloader";
+import { Cursor, useSmoothScroll } from "./ui";
 
 export default function App() {
   useSmoothScroll();
@@ -11,9 +13,8 @@ export default function App() {
 
   return (
     <>
-      {!ready && <Preloader onDone={done} />}
+      <Preloader onDone={done} />
       <Cursor />
-      <div className="grain" aria-hidden />
       <Nav />
       <main>
         <Hero ready={ready} />

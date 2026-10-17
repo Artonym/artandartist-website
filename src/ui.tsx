@@ -1,5 +1,5 @@
 import {
-  animate,
+  AnimatePresence,
   motion,
   useInView,
   useMotionValue,
@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 import Lenis from "lenis";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import { PHOTOS, photoUrl, type PhotoKey } from "./photos";
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -182,60 +183,6 @@ export function Cursor() {
   );
 }
 
-/* ---------- preloader ---------- */
-export function Preloader({ onDone }: { onDone: () => void }) {
-  const [n, setN] = useState(0);
-  const [out, setOut] = useState(false);
-  useEffect(() => {
-    scrollLock(true);
-    const c = animate(0, 100, {
-      duration: 1.9,
-      ease: [0.6, 0, 0.3, 1],
-      onUpdate: (v) => setN(Math.round(v)),
-      onComplete: () => {
-        setOut(true);
-        setTimeout(() => {
-          onDone();
-          scrollLock(false);
-        }, 250);
-      },
-    });
-    return () => c.stop();
-  }, [onDone]);
-  return (
-    <motion.div
-      className="preloader"
-      initial={false}
-      animate={out ? { clipPath: "inset(0 0 100% 0)" } : { clipPath: "inset(0 0 0% 0)" }}
-      transition={{ duration: 1, ease: EASE }}
-      aria-hidden
-    >
-      <motion.img
-        className="preloader__logo"
-        src="/logo.png"
-        alt=""
-        initial={{ opacity: 0, y: 16, scale: 0.9 }}
-        animate={{ opacity: out ? 0 : 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.9, ease: EASE }}
-      />
-      <div className="preloader__word">
-        {"Art & Artist".split("").map((c, i) => (
-          <motion.span
-            key={i}
-            initial={{ y: "110%" }}
-            animate={{ y: out ? "-110%" : "0%" }}
-            transition={{ duration: 0.9, ease: EASE, delay: out ? i * 0.02 : 0.15 + i * 0.045 }}
-          >
-            {c === " " ? " " : c}
-          </motion.span>
-        ))}
-      </div>
-      <div className="preloader__count">{String(n).padStart(3, "0")}</div>
-      <div className="preloader__bar" style={{ transform: `scaleX(${n / 100})` }} />
-    </motion.div>
-  );
-}
-
 export function Brand() {
   return (
     <>
@@ -247,11 +194,51 @@ export function Brand() {
   );
 }
 
-export function Star({ className }: { className?: string }) {
+/* ---------- real photographs: fade in when loaded, never show a broken icon ---------- */
+export function Photo({ k, w = 640, className = "", eager = false }: { k: PhotoKey; w?: number; className?: string; eager?: boolean }) {
+  const p = PHOTOS[k];
+  const [ok, setOk] = useState(false);
   return (
-    <svg className={className} viewBox="0 0 40 40" aria-hidden>
-      <path d="M20 0 L23 15 L38 12 L26 22 L36 34 L21 28 L20 40 L17 26 L3 33 L13 21 L2 10 L16 15 Z" fill="currentColor" />
-    </svg>
+    <img
+      ref={(el) => {
+        if (el && el.complete && el.naturalWidth > 0) setOk(true);
+      }}
+      className={`photo${ok ? " is-in" : ""} ${className}`}
+      src={photoUrl(p.id, w)}
+      srcSet={`${photoUrl(p.id, w)} 1x, ${photoUrl(p.id, w * 2)} 2x`}
+      alt={p.alt}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      draggable={false}
+      onLoad={() => setOk(true)}
+    />
+  );
+}
+
+/* ---------- a word that keeps changing: "A home for painters / filmmakers / ..." ---------- */
+export function Rotator({ words, every = 2200 }: { words: string[]; every?: number }) {
+  const [i, setI] = useState(0);
+  const reduce = useReducedMotion();
+  useEffect(() => {
+    if (reduce) return;
+    const t = setInterval(() => setI((n) => (n + 1) % words.length), every);
+    return () => clearInterval(t);
+  }, [words.length, every, reduce]);
+  return (
+    <span className="rotator" aria-live="polite">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={words[i]}
+          className="rotator__word"
+          initial={{ y: "60%", opacity: 0 }}
+          animate={{ y: "0%", opacity: 1 }}
+          exit={{ y: "-60%", opacity: 0 }}
+          transition={{ duration: 0.45, ease: EASE }}
+        >
+          {words[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
 }
 
