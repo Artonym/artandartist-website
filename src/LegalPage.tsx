@@ -122,14 +122,14 @@ export default function LegalPage({ doc }: { doc: LegalDoc }) {
             <nav className="policy__switch" aria-label="Legal documents">
               {DOCS.map((d) => (
                 <a key={d.slug} href={d.slug} className={d === doc ? "is-active" : ""} aria-current={d === doc ? "page" : undefined}>
-                  {d.title}
+                  {d.tab}
                 </a>
               ))}
             </nav>
             <p className="eyebrow">{doc.title}</p>
             <h1 className="policy__title">Art &amp; Artist</h1>
             <p className="policy__op">Operated by {doc.operator}</p>
-            <p className="policy__updated">Last updated: {doc.updated}</p>
+            <p className="policy__updated">Last updated: {doc.updated} · Version {doc.version}</p>
             <div className="policy__intro">
               {doc.intro.map((t) => (
                 <p key={t}>{rich(t)}</p>

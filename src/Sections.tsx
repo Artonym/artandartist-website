@@ -575,7 +575,9 @@ export function Footer() {
         <p>Art deserves more than applause.</p>
         <div className="footer__links">
           <a href="/privacypolicy">Privacy Policy</a>
-          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="/terms">Terms of Service</a>
+          <a href="/guidelines">Guidelines</a>
+          <a href="/delete-account">Delete account</a>
           <a href="#top" onClick={(e) => { e.preventDefault(); scrollToId("top"); }}>Back to top ↑</a>
         </div>
       </div>
