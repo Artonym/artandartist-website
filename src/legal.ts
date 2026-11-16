@@ -55,7 +55,7 @@ export const PRIVACY: LegalDoc = {
       "blocks": [
         {
           "t": "p",
-          "x": "Art and Artist is run by Artonym Private Limited, Plot No. 1774, Floor II, Venkata Ramana Colony, Gokul Plots, Kukatpally, Hyderabad 500075, Telangana, India (\"we\", \"us\"). We decide how and why your personal data is used, and we are responsible for it. Questions about this policy: support@artonym.in."
+          "x": "Art and Artist is run by Artonym Private Limited, Plot No. 1774, Floor II, Venkata Ramana Colony, Gokul Plots, Kukatpally, Hyderabad 500075, Telangana, India (\"we\", \"us\"). We decide how and why your personal data is used, and we are responsible for it. This policy covers the Art and Artist apps for iPhone and Android and the web version at app.artonym.in. Questions about this policy: support@artonym.in."
         }
       ]
     },
